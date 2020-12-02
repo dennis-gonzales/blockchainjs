@@ -41,5 +41,27 @@ describe('Blockchain', () => {
 
         expect(blockchain.isValidChain(chichain.chain)).toBe(false);
     });
-    
+
+    it('replaces the chain with a valid updated chain', () => {
+        chichain.addBlock('Absolute Territory');
+        blockchain.replaceChain(chichain.chain);
+
+        expect(blockchain.chain).toEqual(chichain.chain);
+    });
+
+    it('does not replace the chain with a corrupted chain', () => {
+        chichain.addBlock('Absolute Territory');
+        chichain.currentBlock().data = 'Zettai Ryouiki';
+        blockchain.replaceChain(chichain.chain);
+
+        expect(chichain.chain).not.toEqual(blockchain.chain);
+    });
+
+    it('does not replace the chain with an outdate chain', () => {
+        blockchain.addBlock('Absolute Territory');
+        blockchain.replaceChain(chichain.chain);
+
+        expect(chichain.chain).not.toEqual(blockchain.chain);
+    });
+
 });
