@@ -34,10 +34,9 @@ class Blockchain {
             const lastBlock = chain[i - 1];
 
             /// check if the previous block `lastBlock.hash`
-            /// is not equal to the current block `blocks.lastHash`
+            /// is not equal to the current block `block.lastHash`
             if (block.lastHash !== lastBlock.hash) {
-                console.log("lash hash mismatch");
-                // console.log("block: " + block);
+                console.log("`block.lastHash` mismatch");
                 return false;
             }
 
@@ -46,7 +45,7 @@ class Blockchain {
             /// passing in the timestamp, lastHash, data
             const { timestamp, lastHash, data } = block;
             if (block.hash !== Block.hash(timestamp, lastHash, data)) {
-                console.log("data hash mismatch");
+                console.log("`block.hash` mismatch");
                 return false;
             }
         }
