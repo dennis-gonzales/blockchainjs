@@ -7,13 +7,12 @@ class Blockchain {
     }
 
     addBlock(data) {
-        const newBlock = Block.mineBlock(this.chain[this.chain.length - 1], data);
+        const newBlock = Block.mineBlock(this.currentBlock(), data);
         this.chain.push(newBlock);
 
         return newBlock;
     }
     
-    // error
     currentBlock() {
         return this.chain[this.chain.length - 1];
     }
