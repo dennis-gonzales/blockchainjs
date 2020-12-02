@@ -26,8 +26,20 @@ describe('Blockchain', () => {
     it('validates a valid chain', () => {
         chichain.addBlock('Oppai is Truth');
 
-
         expect(blockchain.isValidChain(chichain.chain)).toBe(true);
+    });
+
+    it('invalidates a corrupted chain', () => {
+        chichain.addBlock('Oppai is Truth');
+        chichain.currentBlock().data = 'Flat is not justice';
+
+        expect(blockchain.isValidChain(chichain.chain)).toBe(false);
+    });
+
+    it('invalidates a corrupted genesis block', () => {
+        chichain.currentBlock().data = 'Flat is not justice';
+
+        expect(blockchain.isValidChain(chichain.chain)).toBe(false);
     });
     
 });

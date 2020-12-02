@@ -21,7 +21,7 @@ class Blockchain {
         /// converts object to string representation and compare values
         if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) {
             /// returns false if the index 0 is not the genesis block
-            console.log("genesis block");
+            console.log("genesis block mismatch");
             return false;
         }
 
@@ -36,7 +36,7 @@ class Blockchain {
             /// check if the previous block `lastBlock.hash`
             /// is not equal to the current block `block.lastHash`
             if (block.lastHash !== lastBlock.hash) {
-                console.log("`block.lastHash` mismatch");
+                console.log("`block.lastHash` mismatch (the block is compromised)");
                 return false;
             }
 
@@ -45,7 +45,7 @@ class Blockchain {
             /// passing in the timestamp, lastHash, data
             const { timestamp, lastHash, data } = block;
             if (block.hash !== Block.hash(timestamp, lastHash, data)) {
-                console.log("`block.hash` mismatch");
+                console.log("`block.hash` mismatch (the data is compromised)");
                 return false;
             }
         }
