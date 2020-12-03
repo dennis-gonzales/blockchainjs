@@ -1,13 +1,14 @@
 const express = require('express');
 const path = require('path');
 const Blockchain = require('../blockchain');
+const logger = require('./middleware/logger');
 
 const HTTP_PORT = process.env.PORT || 3001;
 
 const app = express();
-app.use(express.json());
-
+app.use(express.json()); // body parser for post requests
 app.use(express.static(path.join(__dirname, '../public')));
+app.use(logger); // middleware logger
 
 const bc = new Blockchain();
 bc.addBlock('Hello World!');
