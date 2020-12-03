@@ -1,31 +1,22 @@
 const express = require('express');
+const path = require('path');
 const Blockchain = require('../blockchain');
 
-const HTTP_PORT = process.env.HTTP_PORT || 3001;
+const HTTP_PORT = process.env.PORT || 3001;
 
 const app = express();
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, '../public')));
+
 const bc = new Blockchain();
 bc.addBlock('Hello World!');
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-});
+app.get('/block/:nonce', (req, res) => res.json(bc.chain[req.query.nonce]));
 
-app.get('/block/:nonce', (req, res) => {
-    const nonce = req.params.nonce;
-    res.json(bc.chain[nonce]);
-});
+app.get('/block', (req, res) => res.json(bc.chain[req.query.nonce]));
 
-app.get('/block', (req, res) => {
-    const nonce = req.query.nonce;
-    res.json(bc.chain[nonce]);
-});
-
-app.get('/blocks', (req, res) => {
-    res.json(bc.chain);
-});
+app.get('/blocks', (req, res) => res.json(bc.chain));
 
 app.post('/mine', (req, res) => {
     const block = bc.addBlock(req.body);
