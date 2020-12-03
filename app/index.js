@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 const bc = new Blockchain();
 bc.addBlock('Hello World!');
 
-app.get('/block/:nonce', (req, res) => res.json(bc.chain[req.query.nonce]));
+app.get('/block/:nonce', (req, res) => res.json(bc.chain[req.params.nonce]));
 
 app.get('/block', (req, res) => res.json(bc.chain[req.query.nonce]));
 
