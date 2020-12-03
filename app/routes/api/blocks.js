@@ -1,9 +1,6 @@
 const express = require('express');
+const bc = require('../../core/bc');
 const router = express.Router();
-const Blockchain = require('../../../blockchain');
-
-const bc = new Blockchain();
-bc.addBlock('Hello World!');
 
 router.get('/', (req, res) => res.json(bc.chain));
 
