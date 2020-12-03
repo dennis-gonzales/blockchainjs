@@ -1,4 +1,5 @@
 const express = require('express');
+const p2p = require('../../core/p2p');
 const bc = require('../../core/bc');
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.post('/mine', (req, res) => {
     const block = bc.addBlock(req.body.data);
     console.log(`New block added: ${block.toString()}`);
 
+    p2p.syncChain();
     res.redirect('/blocks');
 });
 
