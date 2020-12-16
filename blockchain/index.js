@@ -6,15 +6,13 @@ class Blockchain {
         this.chain = [Block.genesis()];
     }
 
+    currentBlock = () => this.chain[this.chain.length - 1];
+
     addBlock(data) {
         const newBlock = Block.mineBlock(this.currentBlock(), data);
         this.chain.push(newBlock);
 
         return newBlock;
-    }
-    
-    currentBlock() {
-        return this.chain[this.chain.length - 1];
     }
 
     isValidChain(chain) {
