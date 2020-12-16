@@ -25,11 +25,13 @@ class P2pServer {
     }
 
     connectToPeers() {
-        console.log(`Connecting ${peers.length} websocket peers...`);
+        console.log(`Connecting to '${peers.length}' websocket peers...`);
 
         peers.forEach(peer => {
             console.log(`Connecting to websocket peer: ${peer}`);
             const socket = new WebSocket(peer);
+
+            // Listen to socket being available and connect it
             socket.on('open', () => this.connectSocket(socket));
         });
     }
@@ -49,6 +51,8 @@ class P2pServer {
         socket.on('message', message => {
             console.log('Message received, attempting to replace chain...');
             const data = JSON.parse(message);
+
+            // Call the replace chain function on message receive
             this.blockchain.replaceChain(data);
         });
     }

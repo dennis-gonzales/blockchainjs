@@ -11,11 +11,15 @@ router.get('/:nonce', (req, res) => res.json(bc.chain[req.params.nonce]));
 /// Content-Type: application/json
 /// To be able to parse the response as a json
 router.post('/mine', (req, res) => {
-    const block = bc.addBlock(req.body.data);
-    console.log(`New block added: ${block.toString()}`);
+    if (req.body.data) {
+        const block = bc.addBlock(req.body.data);
+        console.log(`New block added: ${block.toString()}`);
 
-    p2p.syncChain();
-    res.redirect('/blocks');
+        p2p.syncChain();
+        res.redirect('/blocks');
+    } else {
+        res.json({ error: 'Invalid request...' })
+    }
 });
 
 module.exports = router;
